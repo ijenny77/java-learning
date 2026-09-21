@@ -4,12 +4,13 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Contact> contacts = new ArrayList<>();
+        HashMap<String, Contact> contacts = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
         try {
             File file = new File("Contact.txt");
@@ -18,7 +19,7 @@ public class Main {
                 String line = fileScanner.nextLine();
                 String[] parts = line.split(",");
                 Contact contact = new Contact(parts[0], parts[1], parts[2]);
-                contacts.add(contact);
+                contacts.put(parts[0],contact);
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found yet");
@@ -51,7 +52,7 @@ public class Main {
                 System.out.print("Enter the email: ");
                 String email = scanner.nextLine();
                 Contact contact = new Contact(name,phone,email);
-                contacts.add(contact);
+                contacts.put(name,contact);
                 try {
                     FileWriter writer = new FileWriter("Contact.txt",true);
                     writer.write(name + "," + phone + "," + email + "\n");
@@ -61,24 +62,20 @@ public class Main {
                 }
                 
             }else if(choice == 2){
-                for(Contact contact:contacts){
+                for(String name : contacts.keySet()){
+                    Contact contact = contacts.get(name);
                     System.out.println("Name: " + contact.getName());
                     System.out.println("Phone: " + contact.getPhone());
                     System.out.println("Email: " + contact.getEmail());
                     System.out.println("_________________________");
-                }
+                }   
             }else if(choice == 3) {
-                boolean found = false;
                 System.out.println("Search by name: ");
                 String searchName = scanner.nextLine();
-                for(Contact contact:contacts){
-                    if(contact.getName().equals(searchName)){
-                        System.out.println(contact.printInfo());
-                        found = true;
-                    }
-                }
-                if(!found){
-                    System.out.println("No contact found with that 1name");
+                if(contacts.containsKey(searchName)) {
+                    System.out.println("Found: " + contacts.get(searchName));
+                }else{
+                    System.out.println("Not Found!");
                 }
             }else if(choice == 4) {
                 System.out.println("Search by name: ");

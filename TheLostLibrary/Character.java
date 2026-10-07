@@ -1,39 +1,24 @@
+
 public class Character implements Interactable {
+
     private String name;
-    private String defaultDialogue;
-    private String revealedDialogue;
-    private boolean hasBeenGivenItem;
+    private String description;
 
-    public Character(String name, String defaultDialogue, String revealedDialogue) {
+    public Character(String name, String description) {
         this.name = name;
-        this.defaultDialogue = defaultDialogue;
-        this.revealedDialogue = revealedDialogue;
-        this.hasBeenGivenItem = false;
+        this.description = description;
     }
 
-    public Character(String name,String defaultDialogue) {
-        this(name,defaultDialogue,"I don't have anything more to say right now.")
-    }
-
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public String getItem(){
-        this.haveBeenGivenItem = true;
+    public String getDescription() {
+        return description;
     }
 
     @Override
-    public String interact(){
-        if(hasBeenGivenItem) {
-            return name + "says: \"" + revealedDialogue + "\"";
-        }else{
-            return name + " says: \"" + defaultDialogue + "\"";
-        }
-    }
-
-    @Override
-    public String toString() {
-        return name;
+    public String interact() {
+        return name + " says: " + description;
     }
 }

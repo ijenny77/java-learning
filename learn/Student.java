@@ -1,30 +1,45 @@
-public class Student {
-    private String firstName;
-    private String lastName;
-    private String email;
+import java.util.Objects;
 
-    public String displayFirstName(){
-        return this.firstName ;
-    }
-    public String displayLastName(){
-        return this.lastName ;
-    }
-    public String displayEmail(){
-        return this.email ;
-    }
-    Student(String firstName) {
-        this.firstName = firstName;
-    }
-    Student(String firstName,String lastName,String email) {
-        this(firstName);
-        this.lastName = lastName;
-        this.email = email;
+public class Student implements Comparable<Student> {
+    int id;
+    String firstName;
+    String lastName;
+    double grade;
+
+    @Override
+    public int compareTo(Student other) {
+        return Integer.compare(this.id, other.id);
     }
 
-    public static void main(String[] args) {
-        Student s1 = new Student("Jenny","Miriotta","ishimwejenny11@gmail.com");
-        Student s2 = new Student("Joy","Ihirwe","ihirwecelia05@gmail.com");
-        System.out.println(s1.displayFirstName() + " " + s1.displayLastName() + " whose email is " + s1.displayEmail());
-        System.out.println(s2.displayFirstName() + " " + s2.displayLastName() + " whose email is " + s2.displayEmail());
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || !(obj instanceof Student)) {
+            return false;
+        }
+
+        Student other = (Student) obj;
+
+        if (id == other.id && Objects.equals(lastName, other.lastName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{id=" + id
+                + ", firstName='" + firstName
+                + "', lastName='" + lastName
+                + "', grade=" + grade + "}";
     }
 }
